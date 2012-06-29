@@ -1,0 +1,5 @@
+<h1>Essays</h1>
+
+<% @essays.each do |essay| %>
+  <p><%= link_to essay.title, essay %></p>
+<% end %>

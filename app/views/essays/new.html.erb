@@ -1,0 +1,17 @@
+<h1>New Essay</h1>
+
+<%= form_for @essay, :multipart => true do |f| %>
+
+  <p><%= f.text_field :title %></p>
+  <p><%= f.text_area :description, :rows => 3 %></p>
+
+  <% (1..10).each do |x| %>
+  <p>
+    <%= f.file_field "photo_#{x}" %>
+    <%= f.text_field "photo_#{x}_caption" %>
+  </p>
+  <% end %>
+
+  <%= f.submit 'Go' %>
+
+<% end %>

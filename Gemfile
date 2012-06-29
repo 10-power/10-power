@@ -27,3 +27,7 @@ gem 'bootstrap-sass', '~> 2.0.0'
 
 gem "devise"
 gem "omniauth-facebook"
+
+gem 'carrierwave'
+
+gem "mini_magick"

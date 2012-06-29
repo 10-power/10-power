@@ -1,0 +1,2 @@
+module EssaysHelper
+end

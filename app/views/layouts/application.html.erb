@@ -8,9 +8,15 @@
 </head>
 <body>
 
+<% if user_signed_in? %>
+<p>Hello <%= current_user.name %></p>
+<% else %>
+<p><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></p>
+<% end %>
+
+
 <%= yield %>
 
-<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
 
 </body>
 </html>

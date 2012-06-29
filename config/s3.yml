@@ -1,0 +1,19 @@
+development:
+  bucket: ten-power-development
+  access_key_id: AKIAJI4JPCQF5Y6DWGIA
+  secret_access_key: x2mclYS77Vkq01/LBa2UFFTmk79XVKL75GJPjN4T
+
+test:
+  bucket: myapp_test
+  access_key_id: <your key>
+  secret_access_key: <your key>
+
+production:
+  bucket: ten-power
+  access_key_id: AKIAJI4JPCQF5Y6DWGIA
+  secret_access_key: x2mclYS77Vkq01/LBa2UFFTmk79XVKL75GJPjN4T
+
+staging:
+  bucket: staging-media.supporterwall.com
+  access_key_id: AKIAJI4JPCQF5Y6DWGIA
+  secret_access_key: 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

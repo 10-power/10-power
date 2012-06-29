@@ -28,7 +28,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
 gem 'yui-rails'
 gem 'bootstrap-sass', '~> 2.0.0'
 

@@ -1,66 +1,26 @@
-
 <h1><%= @essay.title %></h1>
 
 <p><%= @essay.description %></p>
 
 <div id="photo" data-number="1">
-  <%= image_tag @essay.photo_1.url, :class => 'photo' %>
-  <p class="caption"><%= @essay.photo_1_caption %></p>
+  <div class="row">
+    <div class="span8">
+      <%= image_tag @essay.photo_1.url, :class => 'photo' %>
+    </div>
+    <div class="span4">
+      <p class="caption"><%= @essay.photo_1_caption %></p>
+    </div>
+  </div>
 </div>
 
 <div id="action" style="display: none">
   <h2>Call <%= @essay.user.name %> and tell him how you can help!</h2>
-  <p><a href="#" class="start-over">Start Over</a></p>
+  <p><%= link_to 'Start Over', @essay, :class => 'start-over' %></p>
+  <p><%= link_to 'View another essay', random_essays_path %></p>
 </div>
 
 <script type="text/javascript">
-  var Photos = <%= @essay.photos(thumb: false).to_json.html_safe %>
-  YUI().use('node', function (Y) {
-    var photos, photo_image, photo_caption, photo, action;
-
-    photos = <%= @essay.photos(thumb: false).to_json.html_safe %>
-
-    photo = Y.one('#photo');
-    action = Y.one('#action');
-    photo_image = photo.one('img');
-    photo_caption = photo.one('.caption');
-
-    function updatePhoto(n) {
-      p = photos[n];
-      photo_image.setAttribute('src', p.url);
-      photo_caption.set('innerHTML', p.caption);
-      photo.setAttribute('data-number', n + 1);
-    }
-
-    function startOver() {
-      action.hide();
-      updatePhoto(0);
-      photo.show();
-    }
-
-    function showNext() {
-      var num = parseInt(photo.getAttribute('data-number'), 10);
-
-      console.log(num, photos.length);
-
-      if (num < photos.length) {
-        console.log(num);
-        if (photos[num]) {
-          updatePhoto(num);
-        } else {
-          console.log('Unexpected error. Photo key does not exist.');
-        }
-      } else if (num == photos.length) {
-        photo.hide();
-        action.show();
-        console.log('One past the limit');
-      } else {
-        console.log('totally wrong number');
-      }
-    }
-
-    photo_image.on('click', showNext);
-    action.one('.start-over').on('click', startOver);
-
-  })
+YUI().use('node', function (Y) {
+  window.PhotoBrowser(<%= @essay.photos(thumb: false).to_json.html_safe %>);
+});
 </script>

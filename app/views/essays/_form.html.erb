@@ -1,0 +1,18 @@
+<%= form_for @essay, :multipart => true do |f| %>
+  <% if @essay.errors.any? %>
+    <% @essay.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+    <% end %>
+  <% end %>
+  <div><%= f.text_field :title, :placeholder => 'Title' %></div>
+  <div><%= f.text_area :description, :rows => 3, :placeholder => 'Description' %></div>
+
+  <% (1..10).each do |x| %>
+  <div>
+    <%= f.file_field "photo_#{x}" %>
+    <%= f.text_field "photo_#{x}_caption", :placeholder => 'Caption' %>
+  </div>
+  <% end %>
+
+  <%= f.submit 'Preview Essay', :class => 'btn btn-primary' %> or <%= link_to 'cancel', account_path %>
+<% end %>

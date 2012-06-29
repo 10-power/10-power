@@ -1,0 +1,9 @@
+<h1>Account</h1>
+
+<h2>Your Essays</h2>
+
+<% @user.essays.each do |e| %>
+<p><%= link_to e.title, edit_essay_path(e) %></p>
+<% end %>
+
+<p><%= link_to 'Create a new essay', new_essay_path, :class => 'btn btn-primary' %></p>

@@ -1,4 +1,8 @@
 class EssaysController < ApplicationController
+  before_filter :authenticate_user!, :except => [ :index, :show, :random ]
+
+  respond_to :html
+
   def index
     @essays = Essay.all
   end
@@ -12,6 +16,8 @@ class EssaysController < ApplicationController
   end
 
   def edit
+    @essay = Essay.find(params[:id])
+    raise ActiveRecord::RecordNotFound if @essay.user_id != current_user.id
   end
 
   def create
@@ -21,6 +27,12 @@ class EssaysController < ApplicationController
 
     @essay.save
 
-    redirect_to essays_path
+    respond_with @essay
   end
+
+  def random
+    essay = Essay.first(:order => "RANDOM()")
+    redirect_to essay
+  end
+
 end

@@ -1,7 +1,7 @@
 <div class="essay-preview">
   <div class="row">
     <div class="span4">
-      <%= image_tag preview.first_photo.url, :class => 'photo' %>
+      <%= image_tag preview.first_photo.small.url, :class => 'photo' %>
     </div>
     <div class="span4">
       <% image_tag "http://api.tiles.mapbox.com/v3/mapbox.mapbox-light/#{preview.lng},#{preview.lat},10/300x300.png" %>
@@ -12,7 +12,7 @@
       <% preview.needs_list.each do |n| %>
       <p><span><%= n %></span></p>
       <% end %>
-      <%= link_to 'Find out more...', preview, :class => 'btn btn-warning' %>
+      <%= link_to 'Find out more...', preview, :class => 'btn btn-warning btn-large' %>
     </div>
   </div>
 </div>

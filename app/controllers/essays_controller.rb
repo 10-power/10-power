@@ -1,5 +1,7 @@
 class EssaysController < ApplicationController
   before_filter :authenticate_user!, :except => [ :index, :show, :random ]
+  before_filter :load_essay, :except => [ :index, :random ]
+  before_filter :protect_essay, :only => [ :edit, :update ]
 
   respond_to :html
 
@@ -8,20 +10,15 @@ class EssaysController < ApplicationController
   end
 
   def show
-    @essay = Essay.find(params[:id])
   end
 
   def new
-    @essay = Essay.new
   end
 
   def edit
-    @essay = Essay.find(params[:id])
-    raise ActiveRecord::RecordNotFound if @essay.user_id != current_user.id
   end
 
   def create
-    @essay = Essay.new
     @essay.user_id = current_user.id
     @essay.attributes = params[:essay]
 
@@ -31,10 +28,6 @@ class EssaysController < ApplicationController
   end
 
   def update
-    @essay = Essay.find(params[:id])
-
-    raise ActiveRecord::RecordNotFound if @essay.user_id != current_user.id
-
     @essay.attributes = params[:essay]
 
     @essay.save
@@ -47,4 +40,13 @@ class EssaysController < ApplicationController
     redirect_to essay
   end
 
+  private
+
+  def load_essay
+    @essay = params[:id] ? Essay.find(params[:id]) : Essay.new
+  end
+
+  def protect_essay
+    raise ActiveRecord::RecordNotFound if @essay.user_id != current_user.id
+  end
 end

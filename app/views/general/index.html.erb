@@ -1,5 +1,6 @@
 
-<div class="hero-unit centered">
-  <h1>Welcome to 10power</h1>
-  <p><%= link_to 'View a random essay', random_essays_path, :class => 'btn btn-primary' %></p>
+<div class="page-header">
+  <h1>Power of 10 <small>10 Photos :: 10 Minutes :: Share your skills with the world</small></h1>
 </div>
+
+<%= render :partial => 'essays/preview', :collection => @essays %>

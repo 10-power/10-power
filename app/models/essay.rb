@@ -7,31 +7,22 @@ class Essay < ActiveRecord::Base
 
   belongs_to :user
 
-  mount_uploader :photo_1, PhotoUploader
-  mount_uploader :photo_2, PhotoUploader
-  mount_uploader :photo_3, PhotoUploader
-  mount_uploader :photo_4, PhotoUploader
-  mount_uploader :photo_5, PhotoUploader
-  mount_uploader :photo_6, PhotoUploader
-  mount_uploader :photo_7, PhotoUploader
-  mount_uploader :photo_8, PhotoUploader
-  mount_uploader :photo_9, PhotoUploader
-  mount_uploader :photo_10, PhotoUploader
+  has_many :photos
 
-  def photos(options = {})
-    options.reverse_merge!({ :size => nil })
-
-    photos = []
-
-    (1..PHOTO_COUNT).each do |x|
-      photo = self.send("photo_#{x}")
-      next if photo.blank?
-      url = options[:size] ? photo.send(options[:size]).url : photo.url
-      photos << { :url => url, :caption => self.read_attribute("photo_#{x}_caption") }
-    end
-
-    photos
-  end
+#  def photos(options = {})
+#    options.reverse_merge!({ :size => nil })
+#
+#    photos = []
+#
+#    (1..PHOTO_COUNT).each do |x|
+#      photo = self.send("photo_#{x}")
+#      next if photo.blank?
+#      url = options[:size] ? photo.send(options[:size]).url : photo.url
+#      photos << { :url => url, :caption => self.read_attribute("photo_#{x}_caption") }
+#    end
+#
+#    photos
+#  end
 
   def needs_list
     output = read_attribute(:needs)
@@ -40,9 +31,6 @@ class Essay < ActiveRecord::Base
   end
 
   def first_photo
-    id = read_attribute(:cover_image_id)
-    id = 1 if id.nil?
-
-    self.send("photo_#{id}")
+    photos.order('position ASC').first
   end
 end

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  essay_id: 1
+  file: MyString
+  content_type: MyString
+  file_size: MyString
+  width: MyString
+  height: MyString
+  caption: MyString
+  position: 1
+
+two:
+  essay_id: 1
+  file: MyString
+  content_type: MyString
+  file_size: MyString
+  width: MyString
+  height: MyString
+  caption: MyString
+  position: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120707070223) do
+ActiveRecord::Schema.define(:version => 20121008061409) do
 
   create_table "essays", :force => true do |t|
     t.string   "title"
@@ -44,6 +44,20 @@ ActiveRecord::Schema.define(:version => 20120707070223) do
     t.float    "lat"
     t.float    "lng"
     t.integer  "map_zoom_level"
+    t.integer  "cover_image_id"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.integer  "essay_id"
+    t.string   "file"
+    t.string   "content_type"
+    t.string   "file_size"
+    t.string   "width"
+    t.string   "height"
+    t.string   "caption"
+    t.integer  "position"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|

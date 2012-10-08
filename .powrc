@@ -1,0 +1,10 @@
+if [ -f "$rvm_path/scripts/rvm" ] && [ -f ".rvmrc" ]; then
+  source "$rvm_path/scripts/rvm"
+  source ".rvmrc"
+fi
+
+export S3_REGION="us-east-1"
+export S3_ASSET_URL="//s3.amazonaws.com"
+export S3_BUCKET_NAME="ten-power-development"
+
+source ".s3-keys"

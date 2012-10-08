@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PowerOf10</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="navbar navbar-static-top">
+  <div class="navbar-inner">
+    <a class="brand" href="/admin/">10power Admin</a>
+    <ul class="nav">
+      <li><a href="/admin/">Home</a></li>
+      <li><a href="/admin/essays">Essays</a></li>
+      <li><a href="/admin/users">Users</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <%= yield %>
+</div>
+
+</body>
+</html>

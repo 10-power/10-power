@@ -1,0 +1,28 @@
+<%= link_to 'Home', root_path %>
+
+<div class="page-header">
+  <h1><%= @essay.title %></h1>
+</div>
+
+<div id="photo" data-number="1">
+  <div class="row">
+    <div class="span8">
+      <%= image_tag @essay.photo_1.url, :class => 'photo' %>
+    </div>
+    <div class="span4">
+      <p class="caption"><%= @essay.photo_1_caption %></p>
+    </div>
+  </div>
+</div>
+
+<div id="action" style="display: none">
+  <p><%= @essay.location %> needs <%= @essay.needs_list.to_sentence %></p>
+  <p><%= link_to 'Start Over', @essay, :class => 'start-over' %></p>
+  <p><%= link_to 'View another essay', random_essays_path %></p>
+</div>
+
+<script type="text/javascript">
+YUI().use('node', function (Y) {
+  window.PhotoBrowser(<%= @essay.photos(thumb: false).to_json.html_safe %>);
+});
+</script>

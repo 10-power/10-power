@@ -9,16 +9,6 @@
 <body>
 
 <div class="container">
-  <div class="pull-right">
-    <% if user_signed_in? %>
-    <p>Hello <%= link_to current_user.name, account_path %> | <%= link_to('Logout', destroy_user_session_path) %></p>
-    <% else %>
-    <p><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></p>
-    <% end %>
-  </div>
-</div>
-
-<div class="container">
   <%= yield %>
 </div>
 

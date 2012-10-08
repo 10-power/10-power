@@ -28,13 +28,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'bootstrap-sass', '~> 2.0.0'
+gem 'bootstrap-sass', '~> 2.1.0.0'
 
 gem "devise"
 gem "omniauth-facebook"
 
 gem 'carrierwave'
 
-gem "mini_magick"
+gem 'rmagick', '2.12.0', :require => 'RMagick'
 
 gem "fog", "~> 1.3.1"

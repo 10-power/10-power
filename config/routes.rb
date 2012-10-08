@@ -1,14 +1,18 @@
 PowerOf10::Application.routes.draw do
+  namespace :admin do
+    resources :essays do
+      resources :photos
+    end
+    resources :users
 
-  get "account" => "account#index"
+    root :to => 'dashboard#index'
+  end
 
-  resources :essays do
+  resources :essays, :only => [ :index, :show ] do
     collection do
       get :random
     end
   end
-
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   root :to => 'general#index'
 end

@@ -30,9 +30,6 @@ end
 
 gem 'bootstrap-sass', '~> 2.1.0.0'
 
-gem "devise"
-gem "omniauth-facebook"
-
 gem 'carrierwave'
 
 gem 'rmagick', '2.12.0', :require => 'RMagick'

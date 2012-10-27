@@ -48,7 +48,6 @@
       </div>
     </div>
   </fieldset>
-<% end %>
 
   <fieldset>
     <legend>Admin Details</legend>
@@ -61,8 +60,13 @@
       <%= f.check_box :is_featured %> is featured
     <% end %></p>
 
+    <p><%= f.text_field :contact_name, :placeholder => 'Contact Name' %></p>
+    <p><%= f.text_field :contact_email, :placeholder => 'Contact Email' %></p>
+
     <p><%= f.text_area :notes, :rows => 5, :placeholder => 'Notes' %></p>
   </fieldset>
+
+<% end %>
 
   <%= f.submit @essay.new_record? ? 'Next' : 'Save', :class => 'btn btn-primary' %> or <%= link_to 'cancel', admin_essays_path %>
 <% end %>

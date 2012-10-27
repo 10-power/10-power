@@ -1,7 +1,7 @@
 class Essay < ActiveRecord::Base
   PHOTO_COUNT = 10
 
-  attr_accessible :description, :title, :lat, :lng, :needs, :location, :map_zoom_level, :is_active, :is_featured, :notes
+  attr_accessible :description, :title, :lat, :lng, :needs, :location, :map_zoom_level, :is_active, :is_featured, :notes, :contact_name, :contact_email
 
   validates_presence_of :title, :location, :needs
 

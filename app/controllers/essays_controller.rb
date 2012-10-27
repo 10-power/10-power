@@ -11,13 +11,13 @@ class EssaysController < ApplicationController
   end
 
   def random
-    essay = Essay.first(:order => "RANDOM()")
+    essay = Essay.where(:is_active => true).order('RANDOM()').first
     redirect_to essay
   end
 
   private
 
   def load_essay
-    @essay = params[:id] ? Essay.find(params[:id]) : Essay.new
+    @essay = params[:id] ? Essay.find_by_id_and_is_active(params[:id], true) : Essay.new
   end
 end

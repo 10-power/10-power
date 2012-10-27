@@ -18,4 +18,8 @@ class Essay < ActiveRecord::Base
   def first_photo
     photos.order('position ASC').first
   end
+
+  def to_param
+    [id, title.parameterize].join("-")
+  end
 end

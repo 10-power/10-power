@@ -16,3 +16,7 @@
 /public/uploads
 
 .s3-keys
+
+latest.dump
+
+users.txt

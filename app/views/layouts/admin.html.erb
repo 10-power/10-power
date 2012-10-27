@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>PowerOf10</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag    "admin", :media => "all" %>
+  <%= javascript_include_tag "admin" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -14,7 +14,9 @@
     <ul class="nav">
       <li><a href="/admin/">Home</a></li>
       <li><a href="/admin/essays">Essays</a></li>
+      <% if current_user.is_admin? %>
       <li><a href="/admin/users">Users</a></li>
+      <% end %>
     </ul>
   </div>
 </div>

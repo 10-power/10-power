@@ -1,0 +1,53 @@
+body { margin-top: 5px; }
+.field_with_errors { display: inline-block; background-color: #fee; }
+#photo .photo { width: 100% }
+.centered { text-align: center; }
+.hero-unit h1 { margin-bottom: 30px; }
+
+.essay-preview {
+  border-bottom: 1px dashed #90B0D0; padding: 30px 0;
+
+  img { width: 100%; }
+  h3, p { font-weight: normal; color: #fff; margin-bottom: 5px; font-size: 18px; }
+  h3 { background-color: #484848; padding: 10px; }
+  p span { font-weight: normal; background-color: #5C5C5C; color: #fff; padding: 10px; display: inline-block; }
+  a.btn { margin-top: 50px; }
+}
+
+
+.yui3-aclist-item-active {
+  background: #2647A0;
+  color: white;
+  outline: 0;
+}
+.yui3-aclist-item-active {
+  outline: #AFAFAF dotted thin;
+}
+.yui3-aclist-item {
+  cursor: pointer;
+  list-style: none;
+  padding: 2px 5px;
+}
+
+.yui3-aclist-content {
+  background: white;
+  border: 1px solid #AFAFAF;
+  -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.58);
+  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+}
+
+#map-image { float: right; }
+
+.filenames div { border: 1px solid #9a9; position: relative; height: 13px; border-radius: 2px; }
+.filenames div .filename { font-size: 9px; position: absolute; left: 3px; top: -2px; z-index: 1; }
+.filenames div .percentdone { background-color: #aca; height: 100%; width: 0%; display: block; position: absolute; top: 0; left: 0; z-index:0; }
+.select-container { background-color: #f2f4f5; border: 1px solid #aaa; padding: 10px; border-radius: 5px; text-align: center; }
+.select-container.yellowBackground { background-color: #f7ed9c; }
+.file-list { }
+.file-list .filenames { background-color: #ddd; margin: 0 5px; padding: 5px; border: 1px solid #aaa; border-top-color: #777; }
+.file-list .filenames div { background-color: #fff; margin-bottom: 2px; }
+.file-list.hidden { display: none; }
+.filenames div.error { color: #fff; }
+.filenames div.error .percentdone { background-color: red; }
+.filenames div.error i { position: absolute; right: 0; font-size: 10px; padding: 0 10px; top: 0; bottom: 0; height: auto; width: auto; line-height: 12px; background-color: rgba(0,0,0,0.4); }

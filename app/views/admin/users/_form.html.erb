@@ -1,0 +1,13 @@
+<%= form_for [:admin, @user] do |f| %>
+  <p><%= f.label :name %> <%= f.text_field :name %></p>
+  <p><%= f.label :email %> <%= f.text_field :email %></p>
+  <p><%= f.label :password %> <%= f.text_field :password %><%= content_tag('span', 'Leave blank to keep it the same', :class => 'help-inline') unless @user.new_record? %></p>
+  <% if current_user.is_admin? %>
+  <p><%= f.label :is_admin?, :class => 'checkbox' do %>
+       <%= f.check_box :is_admin %> Is an admin account
+     <% end %></p>
+  <% end %>
+  <div class="actions">
+    <%= f.submit 'Save', :class => 'btn btn-primary' %> or <%= link_to 'cancel', admin_users_path %>
+  </div>
+<% end %>

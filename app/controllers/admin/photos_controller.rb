@@ -16,11 +16,20 @@ class Admin::PhotosController < ApplicationController
 
   def update
     @photo.attributes = Photo.filter_attributes(params)
-    @photo.save
 
-    respond_with :admin, @photo, :location => admin_essay_photo_url(@essay, @photo)
+    if @photo.save
+      respond_with :admin, @photo, :location => admin_essay_photo_url(@essay.id, @photo.id)
+    else
+      respond_with :admin, @photo
+    end
   end
   alias :create :update
+
+  def destroy
+    @photo.destroy
+
+    respond_with @photo
+  end
 
   private
 

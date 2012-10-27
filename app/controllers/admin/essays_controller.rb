@@ -16,14 +16,23 @@ class Admin::EssaysController < Admin::ApplicationController
   def edit
   end
 
+  def create
+    @essay.attributes = params[:essay]
+
+    if @essay.save
+      respond_with :admin, @essay, :location => edit_admin_essay_path(@essay)
+    else
+      respond_with :admin, @essay
+    end
+  end
+
   def update
     @essay.attributes = params[:essay]
 
     @essay.save
 
-    respond_with @essay
+    respond_with :admin, @essay
   end
-  alias :create :update
 
   private
 

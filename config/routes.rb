@@ -1,4 +1,10 @@
 PowerOf10::Application.routes.draw do
+  get "users/index"
+
+  get "users/new"
+
+  get "users/edit"
+
   namespace :admin do
     resources :essays do
       resources :photos

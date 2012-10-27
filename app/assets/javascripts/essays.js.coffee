@@ -5,6 +5,8 @@
 YUI().use "node", (Y) ->
   window.PhotoBrowser = (photos) ->
 
+    console.log photos
+
     action = Y.one("#action")
 
     photo = Y.one("#photo")
@@ -39,9 +41,16 @@ YUI().use "node", (Y) ->
       else
         # Do nothing
 
+    preloadPhotos = (photos) ->
+      Y.each photos, (photo) ->
+        img = new Image();
+        img.src = photo.url;
+
     photo_image.on "click", showNext
 
     action.one(".start-over").on "click", startOver
+
+    preloadPhotos(photos)
 
 YUI.add "location-search", (Y) ->
 
@@ -92,7 +101,7 @@ YUI.add "location-search", (Y) ->
 
   }
 
-  Y.namespace('PowerOf10').LocationSearch = LocationSearch
+  Y.namespace('10power').LocationSearch = LocationSearch
 
 , "0.0.1",
    requires: ["autocomplete", "autocomplete-highlighters", "node"]

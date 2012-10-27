@@ -1,7 +1,11 @@
 <div class="essay-preview">
   <div class="row">
     <div class="span4">
-      <%= link_to(image_tag(preview.first_photo.small.url, :class => 'photo'), preview) %>
+      <% if preview.first_photo %>
+      <%= link_to(image_tag(preview.first_photo.file.small.url, :class => 'photo'), preview) %>
+      <% else %>
+      <p>No photos</p>
+      <% end %>
     </div>
     <div class="span4">
       <% image_tag "http://api.tiles.mapbox.com/v3/mapbox.mapbox-light/#{preview.lng},#{preview.lat},10/300x300.png" %>

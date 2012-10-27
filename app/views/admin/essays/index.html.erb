@@ -1,5 +1,25 @@
-<h1>Essays</h1>
+<div class="page-header">
+  <div class="pull-right">
+    <%= link_to 'New Essay', new_admin_essay_path, :class => 'btn' %>
+  </div>
+  <h1>Essays</h1>
+</div>
 
-<% @essays.each do |essay| %>
-  <p><%= link_to essay.title, [:admin, essay] %></p>
-<% end %>
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Country</th>
+    <th>Is Active?</th>
+    <th>Is Featured?</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% @essays.each do |essay| %>
+  <tr>
+    <td><%= link_to essay.title, [:admin, essay] %></td>
+    <td><%= essay.location %></td>
+    <td><%= essay.is_active? %></td>
+    <td><%= essay.is_featured? %></td>
+    <td><%= link_to 'Edit', edit_admin_essay_path(essay) %></td>
+  </tr>
+  <% end %>
+</table>

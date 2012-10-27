@@ -1,29 +1,26 @@
 <div class="page-header">
-  <h1><%= @essay.title %></h1>
+  <div class="pull-right">
+    <%= link_to 'Edit', edit_admin_essay_path(@essay), :class => 'btn' %>
+  </div>
+
+  <h1><%= @essay.title %> &mdash; <%= @essay.location %></h1>
+  <small>Needs: <%= @essay.needs_list.to_sentence %></small>
 </div>
 
-<% if @essay.first_photo %>
-<div id="photo" data-number="1">
-  <div class="row">
-    <div class="span8">
-      <%= image_tag @essay.first_photo.file.small.url, :class => 'photo' %>
+<% if @essay.photos.size > 0 %>
+  <div class="photos">
+  <% @essay.photos.each do |photo| %>
+    <div class="photo">
+      <%= image_tag photo.file.small.url %>
+      <p><%= photo.caption || 'No Caption' %></p>
     </div>
-    <div class="span4">
-      <p class="caption"><%= @essay.first_photo.caption %></p>
-    </div>
+  <% end %>
   </div>
-</div>
 <% else %>
 <p>There are no photos for this essay.</p>
 <% end %>
 
-<div id="action"<%= 'style="display: none"' unless @essay.first_photo %>>
-  <p><%= @essay.location %> needs <%= @essay.needs_list.to_sentence %></p>
-  <p><%= link_to 'Edit', edit_admin_essay_path(@essay) %></p>
-</div>
-
-<script type="text/javascript">
-YUI().use('node', function (Y) {
-  window.PhotoBrowser(<%= @essay.photos.collect { |p| { caption: p.caption, url: p.file.small.url } }.to_json.html_safe %>);
-});
-</script>
+<style type="text/css">
+.photos .photo { position: relative; float: left; margin-right: 10px; margin-bottom: 10px; }
+.photos .photo p { position: absolute; bottom: 0; left: 0; right: 0; color: #fff; background-color: rgba(0,0,0,0.5); padding: 10px; margin: 0; }
+</style>

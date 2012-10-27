@@ -17,35 +17,69 @@
   <%= f.hidden_field :lng %>
   <%= f.hidden_field :map_zoom_level %>
 
-  <div><%= f.text_field :title, :placeholder => 'Title' %></div>
-  <div><%= f.text_field :location, :placeholder => 'Location' %></div>
-  <div><%= f.text_area :description, :rows => 3, :placeholder => 'Description' %></div>
-  <div><%= f.text_area :needs, :rows => 3, :placeholder => 'A Material Scientist, An Engineer, etc' %></div>
+  <p><%= f.text_field :title, :placeholder => 'Title' %></p>
+  <p><%= f.text_field :location, :placeholder => 'Location' %></p>
+  <p><%= f.text_area :description, :rows => 3, :placeholder => 'Description' %></p>
+  <p><%= f.text_area :needs, :rows => 3, :placeholder => 'A Material Scientist, An Engineer, etc' %></p>
 
-  <%= f.submit 'Preview Essay', :class => 'btn btn-primary' %> or <%= link_to 'cancel', admin_essays_path %>
+<% unless @essay.new_record? %>
+  <fieldset>
+    <legend>Photos</legend>
+    <div class="row-fluid">
+      <div class="span6">
+        <div id="photos">
+          <% @essay.photos.each do |p| %>
+            <div class="photo-form" data-photo-id="<%= p.id %>">
+              <img src="<%= p.file.thumb.url %>" class="pull-left">
+              <input type="text" name="caption" value="<%= p.caption %>"> &mdash; <a class="delete">delete</a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="span6">
+        <div id="micro-uploader">
+          <div class="padding">
+            <div class="select-container"><a class="select-button">Select Files For Upload</a></div>
+          </div>
+          <div class="file-list hidden">
+            <div class="filenames"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
 
-<div id="photos">
-  <% @essay.photos.each do |p| %>
-    <div class="photo-form">
-      <img src="<%= p.file.thumb.url %>" class="pull-left">
-      <input type="text" name="caption" value="<%= p.caption %>">
-    </div>
-  <% end %>
-</div>
+  <fieldset>
+    <legend>Admin Details</legend>
+
+    <p><%= f.label :is_active?, :class => 'checkbox' do %>
+      <%= f.check_box :is_active %> is active
+    <% end %></p>
+
+    <p><%= f.label :is_featured?, :class => 'checkbox' do %>
+      <%= f.check_box :is_featured %> is featured
+    <% end %></p>
+
+    <p><%= f.text_area :notes, :rows => 5, :placeholder => 'Notes' %></p>
+  </fieldset>
+
+  <%= f.submit @essay.new_record? ? 'Next' : 'Save', :class => 'btn btn-primary' %> or <%= link_to 'cancel', admin_essays_path %>
+<% end %>
+
 <style type="text/css">
 .photo-form { overflow:auto; margin-bottom: 10px; }
 .photo-form img { margin-right: 10px; }
 .photo-form input[name="caption"] { margin-top: 10px; }
 </style>
-      <div id="micro-uploader">
-        <div class="padding">
-          <div class="select-container"><a class="select-button">Select Files For Upload</a></div>
-        </div>
-        <div class="file-list hidden">
-          <div class="filenames"></div>
-        </div>
-      </div>
+
+
+<script type="text/javascript">
+YUI().use('update-photo-caption-on-change', 'remove-photo-on-click', function (Y) {
+  Y.App.UpdatePhotoCaptionOnChange(<%= @essay.id %>);
+  Y.App.RemovePhotoOnClick(<%= @essay.id %>);
+});
+</script>
 
 <script type="text/javascript">
 YUI().use('autocomplete', function (Y) {
@@ -118,7 +152,7 @@ YUI().use('autocomplete', function (Y) {
     // Adjust the width of the input container.
     acNode.ac.after('resultsChange', function () {
         var newWidth = this.get('boundingBox').get('offsetWidth');
-        acNode.setStyle('width', Math.max(newWidth, 100));
+        acNode.setStyle('width', Math.max(newWidth, 150));
     });
 
     function getZoom(loc) {
@@ -158,124 +192,107 @@ YUI({filter:"raw"}).use("uploader", "json", "transition", function(Y) {
 
   // container.one(".progress").set("text", "Uploader type: " + Y.Uploader.TYPE);
 
-  if (Y.Uploader.TYPE != "none" && !Y.UA.ios) {
-    var uploader = new Y.Uploader({
-                                    multipleFiles: true,
-                                    uploadURL: "/admin/essays/<%= @essay.id %>/photos",
-                                    simLimit: 2,
-                                    withCredentials: false,
-                                    fileFieldName: 'file',
-                                    uploadHeaders: { 'X-CSRF-Token': csrfToken },
-                                    selectFilesButton: container.one('.select-button')
-                                  });
-    var uploadDone = false;
+  if (Y.one('#micro-uploader')) {
+    if (Y.Uploader.TYPE != "none" && !Y.UA.ios) {
+      var uploader = new Y.Uploader({
+                                      multipleFiles: true,
+                                      uploadURL: "/admin/essays/<%= @essay.id %>/photos",
+                                      simLimit: 2,
+                                      withCredentials: false,
+                                      fileFieldName: 'file',
+                                      uploadHeaders: { 'X-CSRF-Token': csrfToken },
+                                      selectFilesButton: container.one('.select-button')
+                                    });
+      var uploadDone = false;
 
-    if (Y.Uploader.TYPE == "html5") {
-      uploader.set("dragAndDropArea", "#micro-uploader .select-container");
+      if (Y.Uploader.TYPE == "html5") {
+        uploader.set("dragAndDropArea", "#micro-uploader .select-container");
 
-      // Y.one("#ddmessage").setHTML("<strong>Drag and drop files here.</strong>");
+        // Y.one("#ddmessage").setHTML("<strong>Drag and drop files here.</strong>");
 
-      uploader.on(["dragenter", "dragover"], function (event) {
-          var dd = event.target.get('dragAndDropArea');
-          dd.addClass("yellowBackground");
-       });
+        uploader.on(["dragenter", "dragover"], function (event) {
+            var dd = event.target.get('dragAndDropArea');
+            dd.addClass("yellowBackground");
+         });
 
-       uploader.on(["dragleave", "drop"], function (event) {
-          var dd = event.target.get('dragAndDropArea');
-          dd.removeClass("yellowBackground");
-       });
-    }
-
-    uploader.render("#micro-uploader .select-container");
-
-    uploader.after("fileselect", function (event) {
-
-      var fileList = event.fileList;
-      var fileTable = container.one(".filenames");
-
-      if (fileList.length > 0 && Y.one("#nofiles")) {
-        Y.one("#nofiles").remove();
+         uploader.on(["dragleave", "drop"], function (event) {
+            var dd = event.target.get('dragAndDropArea');
+            dd.removeClass("yellowBackground");
+         });
       }
 
-      if (uploadDone) {
-        uploadDone = false;
-        fileTable.setHTML("");
-      }
+      uploader.render("#micro-uploader .select-container");
 
-      Y.each(fileList, function (fileInstance) {
-        fileTable.append("<div id='" + fileInstance.get("id") + "_row" + "'>" +
-                              "<span class='filename'>" + fileInstance.get("name") + "</span>" +
-                              "<span class='percentdone'></span>" +
-                              "</div>");
+      uploader.after("fileselect", function (event) {
+
+        var fileList = event.fileList;
+        var fileTable = container.one(".filenames");
+
+        if (fileList.length > 0 && Y.one("#nofiles")) {
+          Y.one("#nofiles").remove();
+        }
+
+        if (uploadDone) {
+          uploadDone = false;
+          fileTable.setHTML("");
+        }
+
+        Y.each(fileList, function (fileInstance) {
+          fileTable.append("<div id='" + fileInstance.get("id") + "_row" + "'>" +
+                                "<span class='filename'>" + fileInstance.get("name") + "</span>" +
+                                "<span class='percentdone'></span>" +
+                                "</div>");
+        });
+
+        container.one('.file-list').removeClass('hidden');
       });
 
-      container.one('.file-list').removeClass('hidden');
-    });
+      uploader.after("fileListChange", function (event) {
+        if (!uploadDone && uploader.get("fileList").length > 0) {
+          uploader.uploadAll();
+        }
+      });
 
-    uploader.after("fileListChange", function (event) {
-      if (!uploadDone && uploader.get("fileList").length > 0) {
-        uploader.uploadAll();
-      }
-    });
+      uploader.on("uploadprogress", function (event) {
+        var fileRow = Y.one("#" + event.file.get("id") + "_row");
+        console.log("uploadprogress", event, fileRow, fileRow.one(".percentdone"), event.percentLoaded);
+        fileRow.one(".percentdone").setStyle("width", event.percentLoaded + "%");
+      });
 
-    uploader.on("uploadprogress", function (event) {
-      var fileRow = Y.one("#" + event.file.get("id") + "_row");
-      console.log("uploadprogress", event, fileRow, fileRow.one(".percentdone"), event.percentLoaded);
-      fileRow.one(".percentdone").setStyle("width", event.percentLoaded + "%");
-    });
+      uploader.on("uploaderror", function (event) {
+        console.log(event, event.data);
+        var fileRow = Y.one("#" + event.file.get("id") + "_row");
+        fileRow.addClass('error').append('<i abbr="' + event.statusText + '">?</i>');
+      });
 
-    uploader.on("uploadstart", function (event) {
-      // uploader.set("enabled", false);
-      // Y.one("#uploadFilesButton").addClass("yui3-button-disabled");
-      // Y.one("#uploadFilesButton").detach("click");
-    });
+      uploader.on("uploadcomplete", function (event) {
+        var fileRow = Y.one("#" + event.file.get("id") + "_row"),
+            response = Y.JSON.parse(event.data);
+        console.log(fileRow, response)
+        fileRow.one(".percentdone").setStyle("width", "100%");
+        if (response.hasOwnProperty('errors')) {
+          fileRow.addClass('error').append('<i abbr="there was an error">?</i>');
+        } else {
+          Y.one('#photos').append('<div class="photo-form" data-photo-id="' + response.id + '"><img src="' + response.file.thumb.url + '" class="pull-left"><input type="text" name="caption" value="' + (response.caption || '') + '"></div>');
+          setTimeout(function () {
+            fileRow.hide('fadeOut', {}, function () {
+              Y.one(this).remove();
+              if (container.one('.filenames').get('children').size() == 0) {
+                container.one('.file-list').addClass("hidden")
+              }
+            });
+          }, 3000)
+        }
+      });
 
-    uploader.on("uploadcomplete", function (event) {
-      var fileRow = Y.one("#" + event.file.get("id") + "_row"),
-          response = Y.JSON.parse(event.data);
-          console.log("uploadcomplete", event, fileRow, fileRow.one(".percentdone"));
-          console.log("parsed response", response);
-          fileRow.one(".percentdone").setStyle("width", "100%");
-          if (response.hasOwnProperty('errors')) {
-            fileRow.addClass('error').append('<i abbr="there was an error">?</i>');
-          } else {
-/*
-            creativeAssetList.add(response);
-            setTimeout(function () {
-              fileRow.hide('fadeOut', {}, function () {
-                console.log(this);
-                Y.one(this).remove();
-                if (container.one('.filenames').get('children').size() == 0) {
-                  container.one('.file-list').addClass("hidden")
-                }
-              });
-            }, 5000) */
-          }
-
-          // fileRow.one('.preview img').set("src", response.file.url);
-    });
-
-    uploader.on("totaluploadprogress", function (event) {
-      // container.one(".progress").setHTML("Total uploaded: <strong>" + event.percentLoaded + "%" + "</strong>");
-    });
-
-    uploader.on("alluploadscomplete", function (event) {
-      // uploader.set("enabled", true);
-      uploader.set("fileList", []);
-      // window.location.reload()
-      // container.one(".progress").set("text", "Uploads complete!");
-      uploadDone = true;
-    });
-
-    /* Y.one("#uploadFilesButton").on("click", function () {
-      if (!uploadDone && uploader.get("fileList").length > 0) {
-        uploader.uploadAll();
-      }
-    }); */
-  } else {
-      Y.one("#micro-uploader").set("text", "We are sorry, but to use the uploader, you either need a browser that support HTML5 or have the Flash player installed on your computer.");
+      uploader.on("alluploadscomplete", function (event) {
+        uploader.set("fileList", []);
+        uploadDone = true;
+      });
+    } else {
+        Y.one("#micro-uploader").set("text", "We are sorry, but to use the uploader, you either need a browser that support HTML5 or have the Flash player installed on your computer.");
+    }
   }
-
 
 });
 

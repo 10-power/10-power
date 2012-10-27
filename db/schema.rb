@@ -11,40 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008061409) do
+ActiveRecord::Schema.define(:version => 20121027183225) do
 
   create_table "essays", :force => true do |t|
     t.string   "title"
     t.integer  "user_id"
     t.string   "description"
-    t.string   "photo_1"
-    t.string   "photo_1_caption"
-    t.string   "photo_2"
-    t.string   "photo_2_caption"
-    t.string   "photo_3"
-    t.string   "photo_3_caption"
-    t.string   "photo_4"
-    t.string   "photo_4_caption"
-    t.string   "photo_5"
-    t.string   "photo_5_caption"
-    t.string   "photo_6"
-    t.string   "photo_6_caption"
-    t.string   "photo_7"
-    t.string   "photo_7_caption"
-    t.string   "photo_8"
-    t.string   "photo_8_caption"
-    t.string   "photo_9"
-    t.string   "photo_9_caption"
-    t.string   "photo_10"
-    t.string   "photo_10_caption"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.text     "needs"
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
     t.integer  "map_zoom_level"
     t.integer  "cover_image_id"
+    t.boolean  "is_featured",    :default => false
+    t.boolean  "is_active",      :default => false
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.text     "notes"
   end
 
   create_table "photos", :force => true do |t|
@@ -61,24 +46,12 @@ ActiveRecord::Schema.define(:version => 20121008061409) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "email"
+    t.string   "password_digest"
     t.string   "name"
+    t.boolean  "is_admin",        :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

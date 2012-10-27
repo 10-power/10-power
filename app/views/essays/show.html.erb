@@ -4,25 +4,29 @@
   <h1><%= @essay.title %></h1>
 </div>
 
+<% if @essay.first_photo %>
 <div id="photo" data-number="1">
   <div class="row">
     <div class="span8">
-      <%= image_tag @essay.photo_1.url, :class => 'photo' %>
+      <%= image_tag @essay.first_photo.file.url, :class => 'photo' %>
     </div>
     <div class="span4">
-      <p class="caption"><%= @essay.photo_1_caption %></p>
+      <p class="caption"><%= @essay.first_photo.caption %></p>
     </div>
   </div>
 </div>
+<% end %>
 
-<div id="action" style="display: none">
+<div id="action"<%= ' style="display: none"'.html_safe if @essay.first_photo %>>
   <p><%= @essay.location %> needs <%= @essay.needs_list.to_sentence %></p>
   <p><%= link_to 'Start Over', @essay, :class => 'start-over' %></p>
   <p><%= link_to 'View another essay', random_essays_path %></p>
 </div>
 
+<% if @essay.first_photo %>
 <script type="text/javascript">
 YUI().use('node', function (Y) {
-  window.PhotoBrowser(<%= @essay.photos(thumb: false).to_json.html_safe %>);
+  window.PhotoBrowser(<%= @essay.photos.collect { |p| { caption: p.caption, url: p.file.url } }.to_json.html_safe %>);
 });
 </script>
+<% end %>

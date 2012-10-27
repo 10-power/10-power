@@ -11,7 +11,9 @@
       <%= image_tag @essay.first_photo.file.url, :class => 'photo' %>
     </div>
     <div class="span4">
-      <p class="caption"><%= @essay.first_photo.caption %></p>
+      <div class="caption">
+        <%= textile @essay.first_photo.caption %>
+      </div>
     </div>
   </div>
 </div>
@@ -26,7 +28,7 @@
 <% if @essay.first_photo %>
 <script type="text/javascript">
 YUI().use('node', function (Y) {
-  window.PhotoBrowser(<%= @essay.photos.collect { |p| { caption: p.caption, url: p.file.url } }.to_json.html_safe %>);
+  window.PhotoBrowser(<%= @essay.photos.collect { |p| { caption: textile(p.caption), url: p.file.url } }.to_json.html_safe %>);
 });
 </script>
 <% end %>

@@ -37,3 +37,5 @@ gem 'rmagick', '2.12.0', :require => 'RMagick'
 gem "fog", "~> 1.3.1"
 
 gem 'bcrypt-ruby'
+
+gem 'RedCloth'

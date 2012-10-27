@@ -12,7 +12,7 @@
   <% @essay.photos.each do |photo| %>
     <div class="photo">
       <%= image_tag photo.file.small.url %>
-      <p><%= photo.caption || 'No Caption' %></p>
+      <%= textile(photo.caption || 'No Caption') %>
     </div>
   <% end %>
   </div>
